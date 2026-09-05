@@ -12,5 +12,5 @@ INSERT INTO products (id, type, name, current_balance, investor_id) VALUES
 (5, 'SAVINGS', 'Education Savings', 1200.00, 3),
 (6, 'RETIREMENT', 'Long Term Growth', 2200.00, 4);
 
-INSERT INTO withdrawal_notices (id, withdrawal_amount, notice_date, status, banking_details, product_id) VALUES
-(1, 150.00, CURRENT_TIMESTAMP, 'PENDING', 'FNB 123456789', 2);
+INSERT INTO withdrawal_notices (withdrawal_amount, notice_date, status, banking_details, product_id) VALUES
+(150.00, CURRENT_TIMESTAMP, 'PENDING', 'FNB 123456789', 2);
