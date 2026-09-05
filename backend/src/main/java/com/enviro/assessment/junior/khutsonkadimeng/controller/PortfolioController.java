@@ -6,6 +6,7 @@ import com.enviro.assessment.junior.khutsonkadimeng.model.WithdrawalNotice;
 import com.enviro.assessment.junior.khutsonkadimeng.service.PortfolioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,8 @@ public class PortfolioController {
             @RequestParam(required = false) String status) {
         String csv = portfolioService.exportWithdrawalHistory(productId, status);
         return ResponseEntity.ok()
-                .header("Content-Type", "text/csv")
+            .header(HttpHeaders.CONTENT_TYPE, "text/csv")
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=enviro365-withdrawal-history.csv")
                 .body(csv);
     }
 }
