@@ -10,6 +10,7 @@ import com.enviro.assessment.junior.khutsonkadimeng.repository.InvestorRepositor
 import com.enviro.assessment.junior.khutsonkadimeng.repository.ProductRepository;
 import com.enviro.assessment.junior.khutsonkadimeng.repository.WithdrawalNoticeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class PortfolioService {
                 productResponses);
     }
 
+    @Transactional
     public WithdrawalNotice createWithdrawal(WithdrawalRequest request) {
         Product product = productRepository.findById(request.productId())
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + request.productId()));
@@ -110,15 +112,26 @@ public class PortfolioService {
         for (WithdrawalNotice notice : notices) {
             lines.add(String.format(
                     "%s,%s,%s,%s,%s,%s",
-                    notice.getId() == null ? "" : notice.getId(),
-                    notice.getProductId() == null ? "" : notice.getProductId(),
-                    notice.getWithdrawalAmount() == null ? "" : notice.getWithdrawalAmount(),
-                    notice.getBankingDetails() == null ? "" : notice.getBankingDetails(),
-                    notice.getStatus() == null ? "" : notice.getStatus(),
-                    notice.getNoticeDate() == null ? "" : notice.getNoticeDate()
+                    csvValue(notice.getId()),
+                    csvValue(notice.getProductId()),
+                    csvValue(notice.getWithdrawalAmount()),
+                    csvValue(notice.getBankingDetails()),
+                    csvValue(notice.getStatus()),
+                    csvValue(notice.getNoticeDate())
             ));
         }
 
         return String.join(System.lineSeparator(), lines);
+    }
+
+    private String csvValue(Object value) {
+        if (value == null) {
+            return "";
+        }
+        String text = value.toString();
+        if (text.contains(",") || text.contains("\"") || text.contains("\n") || text.contains("\r")) {
+            return "\"" + text.replace("\"", "\"\"") + "\"";
+        }
+        return text;
     }
 }

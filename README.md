@@ -65,6 +65,24 @@ npm run dev
 
 Open `http://localhost:5173`. Vite proxies `/api` requests to the backend at port 8080.
 
+## Screenshots
+
+### Portfolio dashboard
+
+![Portfolio dashboard](docs/screenshots/portfolio-dashboard.png)
+
+### Withdrawal form
+
+![Withdrawal form](docs/screenshots/withdrawal-form.png)
+
+### Successful withdrawal and balance update
+
+![Successful withdrawal](docs/screenshots/successful-withdrawal.png)
+
+### Retirement withdrawal rule context
+
+![Retirement withdrawal rule context](docs/screenshots/retirement-age-rule-context.png)
+
 ## Verification Commands
 
 Run backend tests:
@@ -164,7 +182,7 @@ Because H2 runs in memory, data resets when the backend restarts. The H2 console
 
 - Start the backend before using the frontend; otherwise dashboard requests will fail.
 - The current database is for development and demonstration only. It is not durable across restarts.
-- The API currently uses `IllegalArgumentException` for several business errors. A future production improvement would be a centralized exception handler with consistent HTTP 4xx responses.
+- Business and input validation errors are returned through a centralized exception handler with consistent HTTP 400 responses.
 - Banking details are stored as plain text in the demo database. Production code should encrypt or tokenize sensitive banking information.
 
 ## AI Use
