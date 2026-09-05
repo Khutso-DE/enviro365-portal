@@ -65,6 +65,21 @@ npm run dev
 
 Open `http://localhost:5173`. Vite proxies `/api` requests to the backend at port 8080.
 
+### Troubleshooting: port 8080 already in use
+
+If Spring Boot reports that port `8080` is already in use, another backend instance is already running. Confirm it with:
+
+```bash
+ss -ltnp 'sport = :8080'
+```
+
+If the API responds successfully, keep the existing instance running and start only the frontend. To stop it before restarting, use the PID shown by `ss`:
+
+```bash
+kill <PID>
+mvn -f backend/pom.xml spring-boot:run
+```
+
 ## Screenshots
 
 ### Portfolio dashboard
